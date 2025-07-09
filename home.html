@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farm Ferry - Fresh Supplies for Restaurants</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f6fff7;
+      color: #419560;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-left h1 {
+      font-size: 1.8rem;
+      text-transform: capitalize;
+    }
+
+    .features {
+      display: flex;
+      gap: 20px;
+      font-size: 0.9rem;
+    }
+
+    .features span,
+    .features a span {
+      background-color: white;
+      color: #4CAF50;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-right a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-btn {
+      background-color: rgb(2, 110, 18);
+      color: #4CAF50;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #dfffe0;
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1582281298056-1715b68f637c') center/cover no-repeat;
+      color: white;
+      padding: 120px 40px;
+      text-align: center;
+      border-radius: 10px;
+      margin: 20px;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+    }
+
+    .section {
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .section h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .card {
+      background-color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 20px;
+      width: 280px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .scorecards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .scorecard {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px 30px;
+      text-align: center;
+      width: 200px;
+      transition: transform 0.3s;
+    }
+
+    .scorecard:hover {
+      transform: scale(1.05);
+    }
+
+    .scorecard h4 {
+      font-size: 1.2rem;
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+
+    .scorecard p {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    footer {
+      background-color: #2f2f2f;
+      color: white;
+      padding: 30px 40px;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 10px 0;
+    }
+
+    @media(max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .nav-left,
+      .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .features {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+
+    /* Modal Styling */
+    .modal {
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 10px;
+      width: 400px;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal .header {
+      padding: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .search-bar {
+      padding: 10px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .city-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .city-item {
+      padding: 15px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .city-item:hover {
+      background-color: #f9f9f9;
+    }
+       .faq-container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .faq-title {
+      text-align: center;
+      color: #4CAF50;
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    .accordion-item {
+      background-color: #fff;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #eafaf0;
+      color: #333;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .accordion-header:hover {
+      background-color: #d2f5e3;
+    }
+
+    .accordion-header i {
+      transition: transform 0.3s ease;
+      color: #4CAF50;
+    }
+
+    .accordion-item.active .accordion-header i {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      padding: 0 20px 20px;
+      display: none;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.6;
+      border-top: 1px solid #ddd;
+    }
+
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .faq-container {
+        padding: 15px;
+      }
+
+      .faq-title {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+      }
+
+      .accordion-header {
+        font-size: 0.95rem;
+        padding: 14px 16px;
+      }
+
+      .accordion-content {
+        padding: 0 16px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .faq-title {
+        font-size: 1.4rem;
+      }
+
+      .accordion-header {
+        font-size: 0.9rem;
+      }
+
+      .accordion-content {
+        font-size: 0.85rem;
+      }
+    }
+
+    .carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: auto;
+  display: none;
+  object-fit: cover;
+}
+
+.carousel-slide.active {
+  display: block;
+}
+
+.carousel button {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  padding: 8px 16px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 4px;
+}
+
+.carousel button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+.network-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  gap: 40px;
+  position: relative;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-width: 120px;
+}
+
+.node {
+  padding: 12px 20px;
+  background-color: #ffffff;
+  color: #2c3e50;
+  font-weight: 600;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.center-node {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+<header>
+  <div class="nav-left">
+    <h1>Farm Ferry</h1>
+    <div class="features">
+      <span onclick="openModal()">Location</span>
+      <a href="file1.html"><span>Browse Catalogue</span></a>
+      <span>Quality</span>
+      <a href="index.html"><span>suppliers</span></a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <a href="code.html" class="login-btn">Login</a>
+  </div>
+</header>
+
+<!-- Hero Section
+<section class="hero">
+  <h2>Fresh Supplies Delivered Daily</h2>
+  <p>Trusted by thousands of restaurants across India</p>
+</section> -->
+
+<!-- Carousel Banner Section (Moved Here) -->
+<section class="carousel-container">
+  <div class="carousel">
+    <img src="https://picsum.photos/id/1018/1600/500" class="carousel-slide active" alt="Farm Image 1">
+    <img src="https://picsum.photos/id/1015/1600/500" class="carousel-slide" alt="Farm Image 2">
+    <img src="https://picsum.photos/id/1020/1600/500" class="carousel-slide" alt="Farm Image 3">
+    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+  </div>
+</section>
+
+<!-- Scorecard Section -->
+<section class="section">
+  <h3>People Visited Score Card</h3>
+  <div class="scorecards">
+    <div class="scorecard"><h4>Visitors Today</h4><p>1,280</p></div>
+    <div class="scorecard"><h4>Weekly Users</h4><p>8,732</p></div>
+    <div class="scorecard"><h4>Registered Restaurants</h4><p>1,509</p></div>
+    <div class="scorecard"><h4>Orders Delivered</h4><p>23,865</p></div>
+  </div>
+</section>
+
+
+  <!-- Products Section -->
+  <section class="section">
+    <h3>Our Products</h3>
+    <div class="cards">
+      <div class="card"><img src="https://thumbs.dreamstime.com/z/close-up-bio-food-garden-produce-harvested-vegetable-fresh-farm-vegetables-zero-waste-eco-friendly-shopping-fresh-158835291.jpg"><h4>Farm Fresh Vegetables</h4><p>Sourced directly from local farms every morning.</p></div>
+      <div class="card"><img src="https://thumbs.dreamstime.com/b/various-types-grains-pulses-arranged-burlap-sacks-rustic-wooden-table-highlighting-rich-colors-textures-341100478.jpg"><h4>Grains & Pulses</h4><p>High-quality staples at mandi prices.</p></div>
+      <div class="card"><img src="https://tse2.mm.bing.net/th/id/OIP.Hf6su8mDYKC4oxXtED4tPQHaFa?pid=Api&P=0&h=220"><h4>Meat & Poultry</h4><p>FSSAI-certified meat, always fresh and hygienic.</p></div>
+    </div>
+  </section>
+
+  <!-- Why Us Section -->
+  <section class="section" style="background-color: #e0fce9;">
+    <h3>Why Choose Us?</h3>
+    <p>Farm Ferry ensures transparency, freshness, and traceability in every order you place. From farm to kitchen – we handle it all.</p>
+  </section>
+
+  <!-- Map Section -->
+  <section id="map-section" class="section">
+    <h3>Our Location</h3>
+    <p>Visit our farm and supply hub to see how freshness starts!</p>
+    <div style="margin-top: 30px; display: flex; justify-content: center;">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.5402440497226!2d72.8777!3d19.0760!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b63b1d29e13d%3A0xd72d2fca5a1fdac0!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1655365730543!5m2!1sen!2sin" 
+        width="100%" 
+        height="400" 
+        style="border:0; border-radius: 10px;" 
+        allowfullscreen="" 
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+<div class="faq-container">
+  <h2 class="faq-title"><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions - Farm Ferry</h2>
+
+  <!-- About Us -->
+  <div class="accordion-item">
+    <div class="accordion-header">What is Farm Ferry? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Farm Ferry is a B2B platform providing fresh farm produce and kitchen essentials directly to restaurants and businesses.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Where does Farm Ferry source its products? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">We source directly from certified farmers and suppliers to ensure premium quality and freshness.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Who can order from Farm Ferry? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Only verified restaurants, hotels, and food service providers can place bulk orders on Farm Ferry.</div>
+  </div>
+
+  <!-- Order Related -->
+  <div class="accordion-item">
+    <div class="accordion-header">How can I place an order on Farm Ferry? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Log in with your registered business account, select products, and confirm the quantity to place your order.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Can I modify or cancel my order after placing it? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Yes, you can modify or cancel your order within 1 hour of placing it via the dashboard.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">What is the delivery time? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Orders are delivered within 24–48 hours depending on your city and order volume.</div>
+  </div>
+
+  <!-- Refund Related -->
+  <div class="accordion-item">
+    <div class="accordion-header">What is the refund policy? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Refunds are provided only for damaged or missing items reported within 6 hours of delivery.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">How long does it take to receive a refund? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Approved refunds will be processed within 5–7 business days.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Will I get a full refund including delivery charges? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Yes, if the issue is valid and reported on time, you’ll receive a full refund including delivery charges.</div>
+  </div>
+
+  <!-- Account Related -->
+  <div class="accordion-item">
+    <div class="accordion-header">How do I register for a Farm Ferry account? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Click on “Sign Up”, provide your business details, and complete mobile OTP verification to register.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">I forgot my password. How can I reset it? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Click “Forgot Password” on the login page to receive a reset link via mobile or email.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Can I update my business profile information? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Yes, you can update your business name, address, and GST details in the profile settings.</div>
+  </div>
+
+  <!-- Payment Related -->
+  <div class="accordion-item">
+    <div class="accordion-header">What payment methods are accepted? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">We accept UPI, Net Banking, Credit/Debit cards, and Wallet payments.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Is Cash on Delivery available? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">No, Farm Ferry supports only prepaid online payments for operational efficiency.</div>
+  </div>
+
+  <div class="accordion-item">
+    <div class="accordion-header">Will I receive an invoice for my order? <i class="fa-solid fa-chevron-down"></i></div>
+    <div class="accordion-content">Yes, a digital GST invoice is generated and sent after each successful transaction.</div>
+  </div>
+</div>
+  <!-- Partner Testimonials Section -->
+<section class="section" style="background-color: #f1fff5;">
+  <h3>What Our Partners Say About Us</h3>
+  <div class="cards">
+    <div class="card">
+      <img src="" alt="OM Photo">
+      <h4>OM</h4>
+      <p>Farm Ferry has transformed our restaurant's supply chain — always fresh, always on time!</p>
+    </div>
+    <div class="card">
+      <img src="" alt="ACP Photo">
+      <h4>ACP</h4>
+      <p>Reliable and efficient service with great quality products. Farm Ferry is our trusted partner.</p>
+    </div>
+    <div class="card">
+      <img src="" alt="Vaishnavi Photo">
+      <h4>Vaishnavi</h4>
+      <p>Their commitment to sustainability and freshness is unmatched. Highly recommended!</p>
+    </div>
+    <div class="card">
+      <img src="" alt="Saee Photo">
+      <h4>Saee</h4>
+      <p>From farm to kitchen with full transparency — Farm Ferry never disappoints.</p>
+    </div>
+  </div>
+</section>
+<!-- Network Map Section -->
+<section class="section" style="background-color: #f9fff9;">
+  <h3>Building a Wide Network of <br><span style="color:#4CAF50;">Sellers & Customers</span></h3>
+  <div class="network-container">
+    <div class="side sellers">
+      <div class="node">FARM</div>
+      <div class="node">NATIONAL</div>
+      <div class="node">IMPORTED</div>
+    </div>
+    <div class="center-node">Farm Ferry</div>
+    <div class="side buyers">
+      <div class="node">DINING</div>
+      <div class="node">QSRs</div>
+      <div class="node">CLOUD KITCHENS</div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Farm Ferry Private Limited. All rights reserved.</p>
+    <p>Contact us: support@farmferry.com | +91 98765 43210</p>
+  </footer>
+
+  <!-- City Selection Modal -->
+  <div class="modal" id="cityModal">
+    <div class="modal-content">
+      <div class="header">Select location</div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search city name" onkeyup="filterCities()">
+      </div>
+      <div class="city-list" id="cityList"></div>
+    </div>
+  </div>
+
+  <!-- JS for Modal -->
+  <script>
+    const cities = ["Ahmednagar","Akola","Alibag","Ambajogai","Amravati","Aurangabad (Chhatrapati Sambhajinagar)","Baramati","Bhandara","Bhusawal","Chandrapur","Chiplun","Deolali","Dhule","Gadchiroli","Gondia","Hinganghat","Hingoli",
+"Ichalkaranji",
+"Jalgaon",
+"Jalna",
+"Karad",
+"Kalyan",
+"Kolhapur",
+"Latur",
+"Malegaon",
+"Malkapur",
+"Manmad",
+"Morshi",
+"Mumbai",
+"Nagpur",
+"Nanded",
+"Nandurbar",
+"Nashik",
+"Navi Mumbai",
+"Osmanabad (Dharashiv)",
+"Panvel",
+"Parbhani",
+"Pune",
+"Raigad",
+"Ratnagiri",
+ "Sangli",
+"Satara",
+"Sindhudurg",
+"Solapur",
+"Thane",
+"Vasai",
+"Virar",
+ "Wardha",
+ "Washim",
+"Yavatmal",]
+
+    const cityList = document.getElementById("cityList");
+    const modal = document.getElementById("cityModal");
+
+    function openModal() {
+      modal.style.display = "flex";
+      displayCities();
+    }
+
+    function displayCities() {
+      cityList.innerHTML = "";
+      cities.forEach(city => {
+        const div = document.createElement("div");
+        div.className = "city-item";
+        div.textContent = city;
+        div.onclick = () => {
+          alert(`Selected City: ${city}`);
+          modal.style.display = "none";
+        };
+        cityList.appendChild(div);
+      });
+    }
+
+    function filterCities() {
+      const searchValue = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = cities.filter(city => city.toLowerCase().includes(searchValue));
+      cityList.innerHTML = "";
+      filtered.forEach(city => {
+        const div = document.createElement("div");
+        div.className = "city-item";
+        div.textContent = city;
+        div.onclick = () => {
+          alert(`Selected City: ${city}`);
+          modal.style.display = "none";
+        };
+        cityList.appendChild(div);
+      });
+    }
+
+    // Optional: Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+  <script>
+  const headers = document.querySelectorAll('.accordion-header');
+
+  headers.forEach(header => {
+    header.addEventListener('click', () => {
+      const parent = header.parentElement;
+      parent.classList.toggle('active');
+    });
+  });
+</script>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.carousel-slide');
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+  }
+
+  function moveSlide(step) {
+    currentSlide = (currentSlide + step + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  setInterval(() => {
+    moveSlide(1);
+  }, 3000);
+
+  showSlide(currentSlide);
+</script>
+
+
+</body>
+</html>

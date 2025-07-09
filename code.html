@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farm Ferry OTP System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 460px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px olivedrab;
+      padding: 40px 35px;
+      animation: slideIn 0.4s ease;
+      text-align: center;
+      position: relative;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .icon {
+      font-size: 56px;
+      color: #2e7d32;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .input-group span {
+      padding: 12px 14px;
+      background: #f3f3f3;
+      font-size: 15px;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      font-size: 15px;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #2e7d32;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .extra-links {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #2e7d32;
+    }
+
+    .extra-links a {
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: 500;
+      margin: 0 6px;
+      cursor: pointer;
+    }
+
+    .extra-links a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login Page -->
+  <div class="page active" id="loginPage">
+    <div class="icon">📱</div>
+    <h2>Enter <span style="color: #2e7d32;">mobile number</span></h2>
+    <p>OTP will be sent to this number for verification</p>
+
+    <div class="input-group">
+      <span>🇮🇳 +91</span>
+      <input type="tel" id="phoneInput" placeholder="Enter 10-digit number" maxlength="10">
+    </div>
+
+    <button id="continueBtn" disabled onclick="sendOTP()">Continue</button>
+
+    <div class="extra-links">
+      <a onclick="showPage('forgotPage')">Forgot Password</a>
+    </div>
+  </div>
+
+  <!-- Forgot Password Page -->
+  <div class="page" id="forgotPage">
+    <div class="icon">🔐</div>
+    <h2>Forgot <span style="color: #2e7d32;">Password</span></h2>
+    <p>Enter your mobile number to receive a reset OTP</p>
+
+    <div class="input-group">
+      <span>🇮🇳 +91</span>
+      <input type="tel" id="forgotPhone" placeholder="Enter 10-digit number" maxlength="10">
+    </div>
+
+    <button id="forgotBtn" disabled onclick="sendForgotOTP()">Send OTP</button>
+
+    <div class="extra-links">
+      <a onclick="showPage('resetPage')">Already have OTP?</a> | <a onclick="showPage('loginPage')">Back to Login</a>
+    </div>
+  </div>
+
+  <!-- Reset Password Page -->
+  <div class="page" id="resetPage">
+    <div class="icon">🔄</div>
+    <h2>Reset <span style="color: #2e7d32;">Password</span></h2>
+    <p>Enter the 6-digit OTP and new password</p>
+
+    <div class="input-group">
+      <span>OTP</span>
+      <input type="text" id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6">
+    </div>
+
+    <div class="input-group">
+      <span>New</span>
+      <input type="password" id="newPassword" placeholder="New password (min 6 chars)">
+    </div>
+
+    <button onclick="resetPassword()">Reset Password</button>
+
+    <div class="extra-links">
+      <a onclick="showPage('loginPage')">Back to Login</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const phoneInput = document.getElementById('phoneInput');
+  const continueBtn = document.getElementById('continueBtn');
+  const forgotPhone = document.getElementById('forgotPhone');
+  const forgotBtn = document.getElementById('forgotBtn');
+
+  phoneInput.addEventListener('input', () => {
+    continueBtn.disabled = !(phoneInput.value.length === 10 && /^\d{10}$/.test(phoneInput.value));
+  });
+
+  forgotPhone.addEventListener('input', () => {
+    forgotBtn.disabled = !(forgotPhone.value.length === 10 && /^\d{10}$/.test(forgotPhone.value));
+  });
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function sendOTP() {
+    const number = phoneInput.value;
+    alert("OTP sent to +91" + number + " (simulated)");
+  }
+
+  function sendForgotOTP() {
+    const number = forgotPhone.value;
+    alert("Reset OTP sent to +91" + number + " (simulated)");
+    showPage('resetPage');
+  }
+
+  function resetPassword() {
+    const otp = document.getElementById('otpInput').value.trim();
+    const newPass = document.getElementById('newPassword').value.trim();
+
+    if (!/^\d{6}$/.test(otp)) {
+      alert("Please enter a valid 6-digit OTP.");
+      return;
+    }
+
+    if (newPass.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
+    alert("Password reset successful! (simulated)");
+    showPage('loginPage');
+  }
+</script>
+
+</body>
+</html>

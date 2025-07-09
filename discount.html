@@ -1,0 +1,191 @@
+<!-- Discount Coupons Section -->
+<section class="discount-section">
+  <h2>🎉 Special Discount Coupons</h2>
+  <ul class="coupon-list">
+    <li><span class="tag">FARM10</span> 10% off on <strong>Vegetables</strong></li>
+    <li><span class="tag">DAIRY20</span> 20% off on <strong>Dairy Products</strong></li>
+    <li><span class="tag">FRESH25</span> 25% off for orders above <strong>₹999</strong></li>
+    <li><span class="tag">WELCOME50</span> ₹50 off for <strong>first-time users</strong></li>
+    <li><span class="tag">SNACKLOVE</span> Buy 1 Get 1 on <strong>Snacks</strong></li>
+    <li><span class="tag">OIL5</span> 5% off on <strong>Edible Oil</strong></li>
+  </ul>
+</section>
+
+<!-- Discounted Products Section -->
+<section class="discounted-products">
+  <h2>🔥 This Week's Discounted Items</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="tomato.jpg.jpeg" alt="Fresh Tomatoes">
+      <h3>Fresh Tomatoes</h3>
+      <p><del>₹40/kg</del> <strong>₹20/kg</strong></p>
+      <button class="addBtn">ADD +</button>
+    </div>
+
+    <div class="product-card">
+      <img src="milk.jpg.jpeg" alt="Milk">
+      <h3>Milk</h3>
+      <p><del>₹40/litre</del> <strong>₹30/litre</strong></p>
+      <button class="addBtn">ADD +</button>
+    </div>
+
+    <div class="product-card">
+      <img src="GettyImages-1149135424-377d295fd8f24168ae2d1b818295a819.jpg" alt="Snack Chips">
+      <h3>Snack Chips</h3>
+      <p><del>₹30</del> <strong>₹30 (BOGO)</strong></p>
+      <button class="addBtn">ADD +</button>
+    </div>
+
+    <div class="product-card">
+      <img src="oil.jpeg" alt="Sunflower Oil">
+      <h3>Sunflower Oil</h3>
+      <p><del>₹150/litre</del> <strong>₹142/litre</strong></p>
+      <button class="addBtn">ADD +</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f1fbe7;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: #4B830D;
+  }
+
+  /* Coupons Section */
+  .discount-section {
+    background: #f1fbe7;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    border-left: 6px solid #8BC34A;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .coupon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .coupon-list li {
+    background: #ffffff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .coupon-list li:hover {
+    transform: scale(1.02);
+    background-color: #edfce3;
+  }
+
+  .tag {
+    background: #8BC34A;
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* Product Grid */
+  .discounted-products {
+    margin: 40px auto;
+    max-width: 1100px;
+    padding: 0 20px;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .product-card {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .product-card h3 {
+    font-size: 18px;
+    color: #4B830D;
+    margin-bottom: 8px;
+  }
+
+  .product-card p {
+    font-size: 15px;
+    margin: 6px 0;
+  }
+
+  .product-card del {
+    color: #999;
+    margin-right: 6px;
+  }
+
+  .product-card strong {
+    color: #c62828;
+  }
+
+  .addBtn {
+    background: #8BC34A;
+    color: white;
+    padding: 8px 16px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .addBtn:hover {
+    background: #7CB342;
+  }
+
+  @media screen and (max-width: 600px) {
+    .coupon-list {
+      grid-template-columns: 1fr;
+    }
+
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Catalog</title>
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Font Awesome for cart icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between--;
+      align-items: center;
+    }
+
+    .cart-icon {
+      position: relative;
+      font-size: 24px; 
+      color: #75bd92;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    header input#searchBar {
+      flex: 1;
+      margin-left: 20px;
+      max-width: 400px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-left">
+        <h1>FarmFerry Product Catalog</h1>
+        <input type="text" id="searchBar" placeholder="Search products..." />
+      </div>
+      <div class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount"> 0</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <aside>
+      <h3>Categories</h3>
+      <ul id="categoryList">
+        <li><label><input type="radio" name="category" value="All" checked> All</label></li>
+        <li><label><input type="radio" name="category" value="Vegetables"> Vegetables</label></li>
+        <li><label><input type="radio" name="category" value="Dairy Products"> Dairy Products</label></li>
+        <li><label><input type="radio" name="category" value="Fruits"> Fruits</label></li>
+        <li><label><input type="radio" name="category" value="Snacks"> Snacks</label></li>
+        <li><label><input type="radio" name="category" value="Masala,Salt and Sugar"> Masala, Salt and Sugar</label></li>
+        <li><label><input type="radio" name="category" value="Chicken & Eggs"> Chicken & Eggs</label></li>
+        <li><label><input type="radio" name="category" value="Sauces & Seasonings"> Sauces & Seasonings</label></li>
+        <li><label><input type="radio" name="category" value="Edible Oil"> Edible Oil</label></li>
+        <li><label><input type="radio" name="category" value="Frozen & Instant Food"> Frozen & Instant Food</label></li>
+        <li><label><input type="radio" name="category" value="Bakery & Chocolates"> Bakery & Chocolates</label></li>
+        <li><label><input type="radio" name="category" value="Beverages & Mixers"> Beverages & Mixers</label></li>
+        <li><label><input type="radio" name="category" value="Dry Fruits & Nuts"> Dry Fruits & Nuts</label></li>
+        <li><label><input type="radio" name="category" value="Fish, Prawns & Seafood"> Fish, Prawns & Seafood</label></li>
+        <li><label><input type="radio" name="category" value="Mutton, Duck & Lamb"> Mutton, Duck & Lamb</label></li>
+        <li><label><input type="radio" name="category" value="Toiletries">Toiletries</label></li>
+      </ul>
+
+      <h3>Tags</h3>
+      <div id="tags">
+        <button>Fresh</button>
+        <button>Organic</button>
+        <button onclick="location.href='discount.html'">Discount</button>
+        <button>Edible</button>
+      </div>
+    </aside>
+
+    <section id="productSection">
+      <!-- Products will be dynamically inserted here -->
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 FarmFerry · Product Catalog Module</p>
+    <p>
+      🌿 Our Promise to You<br>
+      At FarmFerry, we are committed to delivering only the finest quality products. Every item on our shelves is carefully selected to ensure it’s fresh, organic, and free from harmful chemicals. Whether you're picking up fruits, vegetables, or everyday essentials, you can trust that your health and satisfaction are our top priorities. Experience the difference of shopping fresh, natural, and responsibly sourced—only at FarmFerry.
+    </p>
+  </footer>
+
+  <!-- Modal for Product Details -->
+  <div id="productModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <img id="modalProductImage" src="" alt="Product Image" class="modal-product-image">
+      <h2 id="modalProductName"></h2>
+      <p id="modalProductPrice"></p>
+      <p id="modalProductCategory"></p> 
+      <p id="modalProductDescription"></p>
+      <p id="modalProductPackSize"></p>
+      <div class="add-button-container">
+        <button class="addBtn">ADD +</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

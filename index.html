@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Suppliers List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --olive: #6b8e23;
+      --deep-olive: #3d5229;
+      --light-olive: #f3f6eb;
+      --white: #ffffff;
+      --text-dark: #2e3b2a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f6fff7;
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--olive), var(--deep-olive));
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 3rem auto;
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .title-section h2 {
+      color: var(--olive);
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .title-section > div {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn,
+    .export-btn {
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      background: var(--olive);
+      color: white;
+    }
+
+    .btn:hover {
+      background: var(--deep-olive);
+    }
+
+    .export-btn {
+      background: #85a362;
+      color: white;
+    }
+
+    .export-btn:hover {
+      background: #5a7c3a;
+    }
+
+    .filter-sort {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-sort input,
+    .filter-sort select {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #c0cba6;
+      font-size: 1rem;
+      width: 220px;
+      background: white;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    thead {
+      background: var(--olive);
+      color: white;
+    }
+
+    thead th {
+      padding: 1rem;
+      text-align: left;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #e5e5e5;
+      background: #fcfff5;
+    }
+
+    tbody td {
+      padding: 0.9rem 1rem;
+      color: #333;
+    }
+
+    tbody tr:hover {
+      background: #f0f9e8;
+    }
+
+    .actions a,
+    .actions button {
+      color: var(--olive);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .pagination button {
+      background: var(--olive);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0 0.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .pagination button.active,
+    .pagination button:hover {
+      background: var(--deep-olive);
+    }
+
+    .floating-add-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--olive);
+      color: white;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .floating-add-btn:hover {
+      background: var(--deep-olive);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-truck"></i> Supplier Directory</h1>
+  </header>
+  <div class="container">
+    <div class="title-section">
+      <h2><i class="fas fa-list"></i> All Suppliers</h2>
+      <div>
+        <a class="btn" href="create.html"><i class="fas fa-plus-circle"></i> Add Supplier</a>
+        <button class="export-btn" onclick="exportCSV()"><i class="fas fa-file-csv"></i> Export CSV</button>
+      </div>
+    </div>
+    <div class="filter-sort">
+      <input type="text" id="searchInput" placeholder="Search supplier by name..." />
+      <select id="productFilter">
+        <option value="">All Products</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Fruits">Fruits</option>
+      </select>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th><i class="fas fa-user"></i> Name</th>
+          <th><i class="fas fa-phone"></i> Contact</th>
+          <th><i class="fas fa-boxes"></i> Products</th>
+          <th><i class="fas fa-cog"></i> Actions</th>
+        </tr>
+      </thead>
+      <tbody id="supplierTable"></tbody>
+    </table>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <a href="create.html" class="floating-add-btn" title="Add Supplier"><i class="fas fa-plus"></i></a>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const productFilter = document.getElementById("productFilter");
+    const table = document.getElementById("supplierTable");
+    const pagination = document.getElementById("pagination");
+    let currentPage = 1;
+    const itemsPerPage = 5;
+
+    function loadSuppliers() {
+      const suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+      const filtered = suppliers.filter(supplier => {
+        const nameMatch = supplier.name.toLowerCase().includes(searchInput.value.toLowerCase());
+        const productMatch = !productFilter.value || supplier.products.toLowerCase().includes(productFilter.value.toLowerCase());
+        return nameMatch && productMatch;
+      });
+
+      const start = (currentPage - 1) * itemsPerPage;
+      const paginated = filtered.slice(start, start + itemsPerPage);
+
+      table.innerHTML = paginated.map((supplier, idx) => {
+        const actualIndex = filtered.indexOf(supplier);
+        return `
+          <tr>
+            <td>${supplier.name}</td>
+            <td>${supplier.contact}</td>
+            <td>${supplier.products}</td>
+            <td class="actions">
+              <a href="details.html?index=${actualIndex}" title="View"><i class="fas fa-eye"></i></a>
+              <a href="create.html?edit=${actualIndex}" title="Edit"><i class="fas fa-edit"></i></a>
+              <button onclick="deleteSupplier(${actualIndex})" title="Delete"><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>`;
+      }).join("");
+
+      pagination.innerHTML = "";
+      const pageCount = Math.ceil(filtered.length / itemsPerPage);
+      for (let i = 1; i <= pageCount; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.className = i === currentPage ? "active" : "";
+        btn.onclick = () => {
+          currentPage = i;
+          loadSuppliers();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    function deleteSupplier(index) {
+      if (confirm("Are you sure you want to delete this supplier?")) {
+        let suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+        suppliers.splice(index, 1);
+        localStorage.setItem("suppliers", JSON.stringify(suppliers));
+        const maxPage = Math.ceil(suppliers.length / itemsPerPage) || 1;
+        if (currentPage > maxPage) currentPage = maxPage;
+        loadSuppliers();
+      }
+    }
+
+    function exportCSV() {
+      const suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+      if (!suppliers.length) return alert("No suppliers to export.");
+      let csv = "Name,Contact,Products\n";
+      suppliers.forEach(s => {
+        csv += `${s.name},${s.contact},${s.products}\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "suppliers.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    searchInput.addEventListener("input", () => {
+      currentPage = 1;
+      loadSuppliers();
+    });
+    productFilter.addEventListener("change", () => {
+      currentPage = 1;
+      loadSuppliers();
+    });
+
+    loadSuppliers();
+  </script>
+</body>
+</html>

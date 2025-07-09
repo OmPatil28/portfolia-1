@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Supplier Details</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f6fff7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(240, 240, 240, 0.5);
+      backdrop-filter: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 2.5rem;
+      width: 90%;
+      max-width: 700px;
+      color: #333;
+      box-shadow: 0 12px 60px rgba(64, 84, 40, 0.3);
+      animation: fadeIn 0.8s ease;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      filter: drop-shadow(0 0 20px rgba(160, 160, 160, 0.3));
+      animation: glow 2s infinite ease-in-out;
+    }
+
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(160, 160, 160, 0.3)); }
+      50% { filter: drop-shadow(0 0 35px rgba(180, 180, 180, 0.6)); }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #7c9c38, #9fb96d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .info {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    .info p {
+      margin: 1rem 0;
+      font-size: 1.1rem;
+      color: #444;
+      border-left: 4px solid rgba(0, 0, 0, 0.1);
+      padding-left: 1rem;
+    }
+
+    .info strong {
+      color: #7c9c38;
+    }
+
+    .btn-group {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #6d8c3d, #a1bf64);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.8rem 1.6rem;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background: #8ea849;
+      transform: translateY(-2px);
+    }
+
+    .btn.delete {
+      background: linear-gradient(135deg, #7a3926, #b04b2e);
+    }
+
+    .btn.delete:hover {
+      background: #993322;
+    }
+
+    #backBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.15);
+      color: #333;
+      padding: 10px 16px;
+      border-radius: 50px;
+      font-size: 14px;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    #backBtn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 2rem 1.4rem; }
+      .btn-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<a id="backBtn" href="index.html"><i class="fas fa-arrow-left"></i> Back to List</a>
+
+<div class="card">
+  <img id="supplierPhoto" src="https://cdn-icons-png.flaticon.com/512/1252/1252346.png" alt="Supplier Image">
+  <h2 id="supplierName">Supplier Name</h2>
+  <div class="info">
+    <p><strong>Contact:</strong> <span id="contact"></span></p>
+    <p><strong>Location:</strong> <span id="location"></span></p>
+    <p><strong>Joining Date:</strong> <span id="date"></span></p>
+    <p><strong>Products Supplied:</strong> <span id="products"></span></p>
+    <p><strong>GST Number:</strong> <span id="gst"></span></p>
+    <p><strong>PAN Number:</strong> <span id="pan"></span></p>
+    <p><strong>Bank Account:</strong> <span id="bank"></span></p>
+    <p><strong>Daily Supply Capacity:</strong> <span id="capacity"></span></p>
+    <p><strong>Product Categories:</strong> <span id="categories"></span></p>
+    <p><strong>Certifications:</strong> <span id="certs"></span></p>
+    <p><strong>Warehouse Address:</strong> <span id="warehouse"></span></p>
+    <p><strong>Last Order Date:</strong> <span id="lastOrder"></span></p>
+    <p><strong>Status:</strong> <span id="status"></span></p>
+    <p><strong>Rating:</strong> <span id="rating"></span></p>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn" id="editBtn"><i class="fas fa-pen"></i> Edit</button>
+    <button class="btn delete" id="deleteBtn"><i class="fas fa-trash"></i> Delete</button>
+    <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+  </div>
+</div>
+
+<script>
+  const index = new URLSearchParams(location.search).get("index");
+  const suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+
+  const getEl = id => document.getElementById(id);
+
+  if (!suppliers[index]) {
+    getEl("supplierName").textContent = "Supplier Not Found";
+  } else {
+    const s = suppliers[index];
+
+    getEl("supplierName").textContent = s.name || "N/A";
+    getEl("contact").textContent = s.contact || "N/A";
+    getEl("location").textContent = s.location || "N/A";
+    getEl("date").textContent = s.date || "N/A";
+    getEl("products").textContent = s.products || "N/A";
+    getEl("gst").textContent = s.gst || "N/A";
+    getEl("pan").textContent = s.pan || "N/A";
+    getEl("bank").textContent = s.bank || "N/A";
+    getEl("capacity").textContent = s.capacity || "N/A";
+    getEl("categories").textContent = s.categories || "N/A";
+    getEl("certs").textContent = s.certs || "N/A";
+    getEl("warehouse").textContent = s.warehouse || "N/A";
+    getEl("lastOrder").textContent = s.lastOrder || "N/A";
+    getEl("status").textContent = s.status || "N/A";
+    getEl("rating").textContent = s.rating || "N/A";
+
+    if (s.photo) {
+      getEl("supplierPhoto").src = s.photo;
+    }
+  }
+
+  document.getElementById("editBtn").addEventListener("click", () => {
+    window.location.href = `create.html?edit=${index}`;
+  });
+
+  document.getElementById("deleteBtn").addEventListener("click", () => {
+    if (confirm("Are you sure you want to delete this supplier?")) {
+      suppliers.splice(index, 1);
+      localStorage.setItem("suppliers", JSON.stringify(suppliers));
+      window.location.href = "index.html";
+    }
+  });
+</script>
+
+</body>
+</html>
